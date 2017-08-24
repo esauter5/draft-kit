@@ -10,11 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170823230346) do
+ActiveRecord::Schema.define(version: 20170824122621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "league_rules", force: :cascade do |t|
+    t.string "league_name"
+    t.integer "num_qbs"
+    t.integer "num_rbs"
+    t.integer "num_wrs"
+    t.integer "num_tes"
+    t.integer "num_flex"
+    t.integer "num_def"
+    t.integer "num_st"
+    t.integer "num_bench"
+    t.float "points_per_passing_yard"
+    t.float "points_per_int"
+    t.float "points_per_passing_td"
+    t.float "points_per_2pc"
+    t.float "points_per_rushing_yard"
+    t.float "points_per_rushing_td"
+    t.float "points_per_receiving_yard"
+    t.float "points_per_reception"
+    t.float "points_per_receiving_td"
+    t.float "points_per_fumble"
+    t.float "points_per_other_td"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_name"], name: "index_league_rules_on_league_name", unique: true
+  end
 
   create_table "players", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"

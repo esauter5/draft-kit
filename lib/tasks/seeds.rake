@@ -87,4 +87,49 @@ namespace :seeds do
       end
     end
   end
+
+  desc 'load league rules'
+  task league_rules: :environment do
+    LeagueRule.create({
+      league_name: 'bon-bon',
+      num_qbs: 1,
+      num_rbs: 2,
+      num_wrs: 2,
+      num_tes: 1,
+      num_flex: 1,
+      num_bench: 7,
+      points_per_passing_yard: 0.04,
+      points_per_int: -2,
+      points_per_passing_td: 6,
+      points_per_2pc: 2,
+      points_per_rushing_yard: 0.10,
+      points_per_rushing_td: 6,
+      points_per_reception: 1,
+      points_per_receiving_yard: 0.10,
+      points_per_receiving_td: 6,
+      points_per_fumble: -2,
+      points_per_other_td: 6
+    })
+
+    LeagueRule.create({
+      league_name: 'bmore-fantasy',
+      num_qbs: 1,
+      num_rbs: 2,
+      num_wrs: 2,
+      num_tes: 1,
+      num_flex: 1,
+      num_bench: 6,
+      points_per_passing_yard: 0.04,
+      points_per_int: -2,
+      points_per_passing_td: 4,
+      points_per_2pc: 2,
+      points_per_rushing_yard: 0.10,
+      points_per_rushing_td: 6,
+      points_per_reception: 1,
+      points_per_receiving_yard: 0.10,
+      points_per_receiving_td: 6,
+      points_per_fumble: -2,
+      points_per_other_td: 6
+    })
+  end
 end
