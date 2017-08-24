@@ -3,7 +3,7 @@ require 'csv'
 namespace :seeds do
   desc 'load players'
   task players: :environment do
-    CSV.foreach('tmp/stats2016.csv') do |row|
+    CSV.foreach('public/stats2016.csv') do |row|
       next if row[0] === "Name"
       player = Player.new({
         name: row[0].downcase,
@@ -28,7 +28,7 @@ namespace :seeds do
 
   desc 'load 2016 stats'
   task stats_2016: :environment do
-    CSV.foreach('tmp/stats2016.csv') do |row|
+    CSV.foreach('public/stats2016.csv') do |row|
       next if row[0] === "Name"
 
       player = Player.find_by(name: row[0].downcase, team: row[1].downcase, position: row[2].downcase)
