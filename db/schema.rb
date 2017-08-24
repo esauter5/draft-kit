@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170823230346) do
     t.integer "rushing_attempts"
     t.integer "rushing_yards"
     t.integer "rushing_tds"
-    t.integer "reception"
+    t.integer "receptions"
     t.integer "receiving_yards"
     t.integer "receiving_tds"
     t.datetime "created_at", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170823230346) do
     t.integer "rushing_attempts"
     t.integer "rushing_yards"
     t.integer "rushing_tds"
-    t.integer "reception"
+    t.integer "receptions"
     t.integer "receiving_yards"
     t.integer "receiving_tds"
     t.integer "targets"

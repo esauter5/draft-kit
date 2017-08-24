@@ -14,7 +14,7 @@ class CreateSeasonStats < ActiveRecord::Migration[5.1]
       t.integer :rushing_yards
       t.integer :rushing_tds
 
-      t.integer :reception
+      t.integer :receptions
       t.integer :receiving_yards
       t.integer :receiving_tds
 
