@@ -37,7 +37,9 @@ class Player < ApplicationRecord
         league_rules.points_per_rushing_td * season_stats.rushing_tds +
         league_rules.points_per_reception * season_stats.receptions +
         league_rules.points_per_receiving_yard * season_stats.receiving_yards +
-        league_rules.points_per_receiving_td * season_stats.receiving_tds
+        league_rules.points_per_receiving_td * season_stats.receiving_tds +
+        league_rules.points_per_fumble * season_stats.fumbles +
+        league_rules.points_per_other_td * season_stats.other_tds
       ).to_f.round(2)
     else
       nil
