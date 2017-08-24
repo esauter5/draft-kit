@@ -61,7 +61,7 @@ namespace :seeds do
 
   desc 'load 2017 projections'
   task projections_2017: :environment do
-    CSV.foreach('tmp/stats2017.csv') do |row|
+    CSV.foreach('public/stats2017.csv') do |row|
       next if row[0] === "Name"
 
       player = Player.find_by(name: row[0].downcase, team: row[1].downcase, position: row[2].downcase)
@@ -84,6 +84,21 @@ namespace :seeds do
         })
 
         puts "#{row[0]} projection already in DB" unless season_projection.save
+      end
+    end
+  end
+
+  desc 'load outlooks'
+  task outlook_2017: :environment do
+    CSV.foreach('public/outlook2017.csv') do |row|
+      player = Player.find_by(name: row[0].downcase)
+
+      if player
+        season_projection = SeasonProjection.find_by(player: player, season: 2017)
+
+        if season_projection
+          season_projection.update(outlook: row[1])
+        end
       end
     end
   end
