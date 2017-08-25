@@ -5,6 +5,49 @@ const columns = [
   {
     Header: 'Player',
     columns: [
+      {
+        Header: 'Owned',
+        id: 'owned',
+        accessor: 'owned',
+        filterMethod: (filter, row) => {
+          const value = filter.value === 'true';
+
+          return filter.value === 'all' || value === row[filter.id];
+        },
+        Filter: ({ filter, onChange }) => (
+          <select
+            onChange={ e => onChange(e.target.value) }
+            style={ { width: '100%' } }
+            value={ filter ? filter.value : 'all' }
+          >
+            <option value="all">All</option>
+            <option value={ true }>Owned</option>
+            <option value={ false }>Not Owned</option>
+          </select>
+        ),
+      },
+
+      {
+        Header: 'Drafted',
+        id: 'drafted',
+        accessor: 'drafted',
+        filterMethod: (filter, row) => {
+          const value = filter.value === 'true';
+
+          return filter.value === 'all' || value === row[filter.id];
+        },
+        Filter: ({ filter, onChange }) => (
+          <select
+            onChange={ e => onChange(e.target.value) }
+            style={ { width: '100%' } }
+            value={ filter ? filter.value : 'all' }
+          >
+            <option value="all">All</option>
+            <option value={ true }>Drafted</option>
+            <option value={ false }>Undrafted</option>
+          </select>
+        ),
+      },
 
       {
         Header: 'Name',
