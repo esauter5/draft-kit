@@ -10,79 +10,7 @@ import draftColumns from './columns';
 
 import camelcaseKeys from 'camelcase-keys';
 
-const displayAttr = (attr) => {
-  let result = attr[0].toUpperCase();
-
-  return attr.slice(1).split('').reduce((res, c) => {
-    if (c === c.toUpperCase()) {
-      res = res + ' ' + c;
-    } else {
-      res = res + c;
-    }
-
-    return res;
-  }, result);
-};
-
-const flattenArr = (arr) => (
-  arr.reduce((res, element) => (
-    res.concat(Array.isArray(element) ? flattenArr(element) : element)
-  ), [])
-);
-
-const mapObject = (obj, filterCb) => {
-  return Object
-      .keys(obj)
-      .filter(filterCb)
-      .map(key => ({
-        id: key,
-        Header: displayAttr(key),
-        accessor: key,
-      }));
-};
-
-const getColumnsFromObject = (obj, sections = []) => {
-  let columns = [];
-
-  const playerInfoColumns = mapObject(obj, (key) => (
-    key !== 'id' && key !== 'playerId' && !sections.includes(key)
-  ));
-
-  const sectionColumns = sections.map((key) => {
-    let childColumns = mapObject(obj[key][0], (key) => (
-      key !== 'id' && key !== 'playerId'
-    ));
-
-    return ({
-      Header: displayAttr(key),
-      columns: childColumns.map((col) => {
-        col.accessor = `${key}[0].${col.id}`;
-        return col;
-      })
-    });
-  });
-
-  return [
-    {
-      Header: 'Player Info',
-      columns: playerInfoColumns,
-    },
-    ...sectionColumns,
-  ];
-
-  //return flattenArr(columns.concat(newChildren,
-  //})));
-};
-
 class DraftBoard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      players: []
-    }
-  }
-
   componentDidMount() {
     fetch('/stats.json')
       .then(response => response.json() )
