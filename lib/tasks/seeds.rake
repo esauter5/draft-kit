@@ -167,7 +167,30 @@ namespace :seeds do
         projection = SeasonProjection.find_by(player: player, season: 2017)
         projection.update(bye_week: row[4]) if projection
       end
+    end
+  end
 
+  desc 'consistency_ratings'
+  task consistency_ratings: :environment do
+    CSV.foreach('public/consistency.csv') do |row|
+      next if row[0].downcase === "player"
+      player = Player.find_by(name: row[0].downcase)
+
+      if player
+        season_stats = SeasonStat.find_by(player: player, season: 2016)
+
+        if season_stats
+          season_stats.update({
+            start_percent: row[2],
+            consistency_rating: row[3],
+            ppr_start_percent: row[4],
+            start: row[6],
+            stud: row[7],
+            stiff: row[8],
+            sat: row[9]
+          })
+        end
+      end
     end
   end
 end

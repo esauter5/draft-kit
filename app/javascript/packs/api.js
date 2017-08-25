@@ -21,3 +21,15 @@ export const disown = (playerId) => {
     .then(response => response.json())
     .catch(e => console.warn(e));
 };
+
+export const watch = (playerId) => {
+  fetch(`/players/${playerId}/watch`, { method: 'PUT' })
+    .then(response => response.json())
+    .catch(e => console.warn(e));
+};
+
+export const unwatch = (playerId) => {
+  fetch(`/players/${playerId}/unwatch`, { method: 'PUT' })
+    .then(response => response.json())
+    .catch(e => console.warn(e));
+};

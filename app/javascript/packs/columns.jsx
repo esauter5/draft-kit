@@ -6,6 +6,8 @@ import {
   undraft,
   own,
   disown,
+  watch,
+  unwatch,
 } from './api';
 
 const defaultSortMethod= (a,b) => {
@@ -33,7 +35,7 @@ const columns = ({ shouldHide = false, onUpdate }) => [
       {
         Header: 'Owned',
         id: 'owned',
-        minWidth: 50,
+        minWidth: 60,
         accessor: 'owned',
         filterMethod: (filter, row) => {
           const value = filter.value === 'true';
@@ -54,8 +56,13 @@ const columns = ({ shouldHide = false, onUpdate }) => [
         Cell: ({ value, original: { id = '' } = {} }) => (
           <p
             onClick={ () => {
-              value ? disown(id) : own(id);
-              onUpdate();
+              if (value) {
+                disown(id);
+                onUpdate(id, "owned", false);
+              } else {
+                own(id);
+                onUpdate(id, "owned", true)
+              }
             } }
             style={
               {
@@ -75,7 +82,7 @@ const columns = ({ shouldHide = false, onUpdate }) => [
       {
         Header: 'Drafted',
         id: 'drafted',
-        minWidth: 50,
+        minWidth: 60,
         accessor: 'drafted',
         filterMethod: (filter, row) => {
           const value = filter.value === 'true';
@@ -96,8 +103,13 @@ const columns = ({ shouldHide = false, onUpdate }) => [
         Cell: ({ value, original: { id = '' } = {} }) => (
           <p
             onClick={ () => {
-              value ? undraft(id) : draft(id);
-              onUpdate();
+              if (value) {
+                undraft(id);
+                onUpdate(id, "drafted", false);
+              } else {
+                draft(id);
+                onUpdate(id, "drafted", true)
+              }
             } }
             style={
               {
@@ -110,6 +122,53 @@ const columns = ({ shouldHide = false, onUpdate }) => [
             }
           >
             { value ? 'Undraft' : 'Draft' }
+          </p>
+        ),
+      },
+
+      {
+        Header: 'Watch',
+        id: 'watch',
+        minWidth: 60,
+        accessor: 'watch',
+        filterMethod: (filter, row) => {
+          const value = filter.value === 'true';
+
+          return filter.value === 'all' || value === row[filter.id];
+        },
+        Filter: ({ filter, onChange }) => (
+          <select
+            onChange={ e => onChange(e.target.value) }
+            style={ { width: '100%' } }
+            value={ filter ? filter.value : 'all' }
+          >
+            <option value="all">All</option>
+            <option value={ true }>Watched</option>
+            <option value={ false }>Unwatched</option>
+          </select>
+        ),
+        Cell: ({ value, original: { id = '' } = {} }) => (
+          <p
+            onClick={ () => {
+              if (value) {
+                unwatch(id);
+                onUpdate(id, "watch", false);
+              } else {
+                watch(id);
+                onUpdate(id, "watch", true)
+              }
+            } }
+            style={
+              {
+                color: value ? 'red' : 'green',
+                cursor: 'pointer',
+                margin: 0,
+                textAlign: 'center',
+                width: '100%',
+              }
+            }
+          >
+            { value ? 'Unwatch' : 'Watch' }
           </p>
         ),
       },
@@ -145,7 +204,7 @@ const columns = ({ shouldHide = false, onUpdate }) => [
             style={ { width: '100%' } }
             value={ filter ? filter.value : 'all' }
           >
-            <option value="all"> Show All</option>
+            <option value="all">All</option>
             <option value="QB">QB</option>
             <option value="RB">RB</option>
             <option value="WR">WR</option>
@@ -224,6 +283,47 @@ const columns = ({ shouldHide = false, onUpdate }) => [
         Header: 'Projected',
         accessor: 'projectedPoints'
       }
+    ]
+  },
+
+  {
+    Header: 'Consistency Rating',
+    columns: [
+      {
+        Header: 'CR',
+        accessor: 'seasonStats[0].consistencyRating',
+        show: !shouldHide.consistency,
+      },
+      {
+        Header: 'Start%',
+        accessor: 'seasonStats[0].startPercent',
+        show: !shouldHide.consistency,
+      },
+      {
+        Header: 'PPR%',
+        accessor: 'seasonStats[0].pprStartPercent',
+        show: !shouldHide.consistency,
+      },
+      {
+        Header: 'Start',
+        accessor: 'seasonStats[0].start',
+        show: !shouldHide.consistency,
+      },
+      {
+        Header: 'Stud',
+        accessor: 'seasonStats[0].stud',
+        show: !shouldHide.consistency,
+      },
+      {
+        Header: 'Stiff',
+        accessor: 'seasonStats[0].stiff',
+        show: !shouldHide.consistency,
+      },
+      {
+        Header: 'Sat',
+        accessor: 'seasonStats[0].sat',
+        show: !shouldHide.consistency,
+      },
     ]
   },
 

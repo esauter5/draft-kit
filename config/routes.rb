@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
       put 'own'
       put 'disown'
+
+      put 'watch'
+      put 'unwatch'
     end
   end
 end

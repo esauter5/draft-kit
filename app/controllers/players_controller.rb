@@ -33,6 +33,23 @@ class PlayersController < ApplicationController
     render json: { player: player.as_json }
   end
 
+  def watch
+    return unless player
+
+    player.update(watch: true)
+
+    render json: { player: player.as_json }
+  end
+
+  def unwatch
+    return unless player
+
+    player.update(watch: false)
+
+    render json: { player: player.as_json }
+  end
+
+
   protected
 
   def player

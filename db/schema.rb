@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825123053) do
+ActiveRecord::Schema.define(version: 20170825202706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20170825123053) do
     t.datetime "updated_at", null: false
     t.boolean "drafted", default: false
     t.boolean "owned", default: false
+    t.boolean "keeper", default: false
+    t.boolean "watch", default: false
     t.index ["name"], name: "index_players_on_name", unique: true
   end
 
@@ -106,6 +108,13 @@ ActiveRecord::Schema.define(version: 20170825123053) do
     t.integer "other_tds"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "consistency_rating"
+    t.float "start_percent"
+    t.float "ppr_start_percent"
+    t.integer "start"
+    t.integer "stud"
+    t.integer "stiff"
+    t.integer "sat"
     t.index ["player_id", "season"], name: "index_season_stats_on_player_id_and_season", unique: true
     t.index ["season"], name: "index_season_stats_on_season"
   end
