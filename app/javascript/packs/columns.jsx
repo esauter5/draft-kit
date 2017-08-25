@@ -26,13 +26,14 @@ const defaultSortMethod= (a,b) => {
   return 0;
 }
 
-const columns = ({ onUpdate }) => [
+const columns = ({ shouldHide = false, onUpdate }) => [
   {
     Header: 'Player',
     columns: [
       {
         Header: 'Owned',
         id: 'owned',
+        minWidth: 50,
         accessor: 'owned',
         filterMethod: (filter, row) => {
           const value = filter.value === 'true';
@@ -74,6 +75,7 @@ const columns = ({ onUpdate }) => [
       {
         Header: 'Drafted',
         id: 'drafted',
+        minWidth: 50,
         accessor: 'drafted',
         filterMethod: (filter, row) => {
           const value = filter.value === 'true';
@@ -167,6 +169,12 @@ const columns = ({ onUpdate }) => [
             ))
         ),
       },
+
+      {
+        Header: 'Bye',
+        accessor: 'seasonProjections[0].byeWeek',
+        minWidth: 50,
+      }
     ],
   },
 
@@ -176,6 +184,13 @@ const columns = ({ onUpdate }) => [
       {
         Header: 'Rank',
         accessor: 'rankings[0].ranking',
+        sortMethod: defaultSortMethod,
+        defaultSortDesc: false,
+        minWidth: 50
+      },
+      {
+        Header: 'Rank',
+        accessor: 'rankings[0].positionRanking',
         sortMethod: defaultSortMethod,
         defaultSortDesc: false,
         minWidth: 50
@@ -217,52 +232,64 @@ const columns = ({ onUpdate }) => [
     columns: [
       {
         Header: 'PassComps',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].passingCompletions',
       },
 
       {
         Header: 'PassAtts',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].passingAttempts',
       },
       {
         Header: 'PassYards',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].passingYards',
       },
       {
         Header: 'PassTds',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].passingTds',
       },
       {
         Header: 'Ints',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].passingInts',
         filterAll: true,
       },
       {
         Header: 'RushAtts',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].rushingAttempts',
       },
       {
         Header: 'RushYards',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].rushingYards',
       },
       {
         Header: 'RushTds',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].rushingTds',
       },
       {
         Header: 'Targets',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].targets',
       },
       {
         Header: 'Recs',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].receptions',
       },
       {
         Header: 'RecYards',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].receivingYards',
       },
       {
         Header: 'RecTds',
+        show: !shouldHide.season,
         accessor: 'seasonStats[0].receivingTds',
       },
     ],
@@ -273,53 +300,63 @@ const columns = ({ onUpdate }) => [
     columns: [
       {
         Header: 'PassComp',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].passingCompletions',
       },
 
       {
         Header: 'PassAtt',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].passingAttempts',
       },
       {
         Header: 'PassYards',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].passingYards',
       },
       {
         Header: 'PassTds',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].passingTds',
       },
       {
         Header: 'Ints',
         accessor: 'seasonProjections[0].passingInts',
+        show: !shouldHide.projected,
         filterAll: true,
       },
       {
         Header: 'RushAtts',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].rushingAttempts',
       },
       {
         Header: 'RushYards',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].rushingYards',
       },
       {
         Header: 'RushTds',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].rushingTds',
       },
       {
         Header: 'Recs',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].receptions',
       },
       {
         Header: 'RecYards',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].receivingYards',
       },
       {
         Header: 'RecTds',
+        show: !shouldHide.projected,
         accessor: 'seasonProjections[0].receivingTds',
       },
     ],
   },
-
   {
     Header: 'Notes',
     columns: [
@@ -327,7 +364,8 @@ const columns = ({ onUpdate }) => [
         Header: 'Outlook',
         accessor: 'seasonProjections[0].outlook',
         className: 'outlook',
-        minWidth: 400,
+        minWidth: 250,
+        maxWidth: 400,
       },
     ]
   },

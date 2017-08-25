@@ -6,7 +6,7 @@ class Player < ApplicationRecord
   validates_uniqueness_of :name
 
   def projected_points
-    league_rules = LeagueRule.first
+    league_rules = LeagueRule.find_by(league_name: 'bmore-fantasy')
     season_projection = SeasonProjection.where(season: 2017, player_id: id)[0]
 
     if season_projection
@@ -26,7 +26,7 @@ class Player < ApplicationRecord
   end
 
   def last_season_points
-    league_rules = LeagueRule.first
+    league_rules = LeagueRule.find_by(league_name: 'bmore-fantasy')
     season_stats = SeasonStat.where(season: 2016, player_id: id)[0]
 
     if season_stats
