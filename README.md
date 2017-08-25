@@ -9,4 +9,5 @@ rake seeds:players
 rake seeds:stats_2016
 rake seeds:projections_2017
 rake seeds:league_rules
+rake seeds:outlook_2017
 ```

@@ -15,7 +15,11 @@ class DraftBoard extends Component {
     super(props);
 
     this.state = {
-      players: []
+      players: [],
+      hide: {
+        season: true,
+        projected: true
+      }
     }
   }
 
@@ -28,17 +32,39 @@ class DraftBoard extends Component {
       });
   }
 
+  changeFilter = (filterType, e) => {
+    const newHide = Object.assign({}, this.state.hide, { [filterType]: !e.target.checked })
+    this.setState({
+      hide: newHide
+    })
+  }
+
   render() {
     const { players } = this.state;
 
     return (
       <div { ...styles.container }>
         <h2>Draft Board</h2>
-
+        <div>
+          <input
+            type="checkbox"
+            name="Season"
+            onChange={ this.changeFilter.bind(this, 'season') }
+          />
+          <label>2016 Season</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            name="Projections"
+            onChange={ this.changeFilter.bind(this, 'projected') }
+          />
+          <label>2017 Projections</label>
+        </div>
         <ReactTable
           className="-striped -highlight"
           data={ players }
-          columns={ draftColumns }
+          columns={ draftColumns(this.state.hide) }
           defaultSortDesc={ true }
           filterable
           defaultFilterMethod={

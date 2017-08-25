@@ -19,13 +19,14 @@ const defaultSortMethod= (a,b) => {
   return 0;
 }
 
-const columns = [
+const columns = (hideColumns) => ([
   {
     Header: 'Player',
     columns: [
       {
         Header: 'Owned',
         id: 'owned',
+        minWidth: 50,
         accessor: 'owned',
         filterMethod: (filter, row) => {
           const value = filter.value === 'true';
@@ -48,6 +49,7 @@ const columns = [
       {
         Header: 'Drafted',
         id: 'drafted',
+        minWidth: 50,
         accessor: 'drafted',
         filterMethod: (filter, row) => {
           const value = filter.value === 'true';
@@ -172,52 +174,64 @@ const columns = [
     columns: [
       {
         Header: 'PassComps',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].passingCompletions',
       },
 
       {
         Header: 'PassAtts',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].passingAttempts',
       },
       {
         Header: 'PassYards',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].passingYards',
       },
       {
         Header: 'PassTds',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].passingTds',
       },
       {
         Header: 'Ints',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].passingInts',
         filterAll: true,
       },
       {
         Header: 'RushAtts',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].rushingAttempts',
       },
       {
         Header: 'RushYards',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].rushingYards',
       },
       {
         Header: 'RushTds',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].rushingTds',
       },
       {
         Header: 'Targets',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].targets',
       },
       {
         Header: 'Recs',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].receptions',
       },
       {
         Header: 'RecYards',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].receivingYards',
       },
       {
         Header: 'RecTds',
+        show: !hideColumns.season,
         accessor: 'seasonStats[0].receivingTds',
       },
     ],
@@ -228,53 +242,63 @@ const columns = [
     columns: [
       {
         Header: 'PassComp',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].passingCompletions',
       },
 
       {
         Header: 'PassAtt',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].passingAttempts',
       },
       {
         Header: 'PassYards',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].passingYards',
       },
       {
         Header: 'PassTds',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].passingTds',
       },
       {
         Header: 'Ints',
         accessor: 'seasonProjections[0].passingInts',
+        show: !hideColumns.projected,
         filterAll: true,
       },
       {
         Header: 'RushAtts',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].rushingAttempts',
       },
       {
         Header: 'RushYards',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].rushingYards',
       },
       {
         Header: 'RushTds',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].rushingTds',
       },
       {
         Header: 'Recs',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].receptions',
       },
       {
         Header: 'RecYards',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].receivingYards',
       },
       {
         Header: 'RecTds',
+        show: !hideColumns.projected,
         accessor: 'seasonProjections[0].receivingTds',
       },
     ],
   },
-
   {
     Header: 'Notes',
     columns: [
@@ -282,10 +306,11 @@ const columns = [
         Header: 'Outlook',
         accessor: 'seasonProjections[0].outlook',
         className: 'outlook',
-        minWidth: 400,
+        minWidth: 250,
+        maxWidth: 400,
       },
     ]
   },
-];
+]);
 
 export default columns;
