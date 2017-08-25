@@ -124,6 +124,12 @@ const columns = (hideColumns) => ([
             ))
         ),
       },
+
+      {
+        Header: 'Bye',
+        accessor: 'seasonProjections[0].byeWeek',
+        minWidth: 50,
+      }
     ],
   },
 
@@ -133,6 +139,13 @@ const columns = (hideColumns) => ([
       {
         Header: 'Rank',
         accessor: 'rankings[0].ranking',
+        sortMethod: defaultSortMethod,
+        defaultSortDesc: false,
+        minWidth: 50
+      },
+      {
+        Header: 'Rank',
+        accessor: 'rankings[0].positionRanking',
         sortMethod: defaultSortMethod,
         defaultSortDesc: false,
         minWidth: 50

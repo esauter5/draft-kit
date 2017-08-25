@@ -44,7 +44,7 @@ class DraftBoard extends Component {
 
     return (
       <div { ...styles.container }>
-        <h2>Draft Board</h2>
+        <h2>The Draft Kit</h2>
         <div>
           <input
             type="checkbox"
