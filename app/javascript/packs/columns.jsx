@@ -1,6 +1,13 @@
 import React from 'react';
 import titleize from 'titleize';
 
+import {
+  draft,
+  undraft,
+  own,
+  disown,
+} from './api';
+
 const defaultSortMethod= (a,b) => {
   // force null and undefined to the bottom
   a = (a === null || a === undefined || a === "") ? Infinity : a;
@@ -19,7 +26,7 @@ const defaultSortMethod= (a,b) => {
   return 0;
 }
 
-const columns = [
+const columns = ({ onUpdate }) => [
   {
     Header: 'Player',
     columns: [
@@ -43,6 +50,25 @@ const columns = [
             <option value={ false }>Not Owned</option>
           </select>
         ),
+        Cell: ({ value, original: { id = '' } = {} }) => (
+          <p
+            onClick={ () => {
+              value ? disown(id) : own(id);
+              onUpdate();
+            } }
+            style={
+              {
+                color: value ? 'red' : 'green',
+                cursor: 'pointer',
+                margin: 0,
+                textAlign: 'center',
+                width: '100%',
+              }
+            }
+          >
+            { value ? 'Disown' : 'Own' }
+          </p>
+        ),
       },
 
       {
@@ -64,6 +90,25 @@ const columns = [
             <option value={ true }>Drafted</option>
             <option value={ false }>Undrafted</option>
           </select>
+        ),
+        Cell: ({ value, original: { id = '' } = {} }) => (
+          <p
+            onClick={ () => {
+              value ? undraft(id) : draft(id);
+              onUpdate();
+            } }
+            style={
+              {
+                color: value ? 'red' : '#3db0df',
+                cursor: 'pointer',
+                margin: 0,
+                textAlign: 'center',
+                width: '100%',
+              }
+            }
+          >
+            { value ? 'Undraft' : 'Draft' }
+          </p>
         ),
       },
 

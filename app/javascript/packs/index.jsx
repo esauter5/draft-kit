@@ -20,6 +20,10 @@ class DraftBoard extends Component {
   }
 
   componentDidMount() {
+    this.fetchPlayers();
+  }
+
+  fetchPlayers = () => {
     fetch('/stats.json')
       .then(response => response.json() )
       .then(players => {
@@ -38,7 +42,7 @@ class DraftBoard extends Component {
         <ReactTable
           className="-striped -highlight"
           data={ players }
-          columns={ draftColumns }
+          columns={ draftColumns({ onUpdate: this.fetchPlayers }) }
           defaultSortDesc={ true }
           filterable
           defaultFilterMethod={
