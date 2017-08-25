@@ -18,3 +18,8 @@ body {
   font-family: "HelveticaNeueLight", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 14px;
 }
+
+.outlook:hover {
+  overflow: auto !important;
+  white-space: pre-wrap !important;
+}

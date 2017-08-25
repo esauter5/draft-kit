@@ -11,6 +11,14 @@ import draftColumns from './columns';
 import camelcaseKeys from 'camelcase-keys';
 
 class DraftBoard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      players: []
+    }
+  }
+
   componentDidMount() {
     fetch('/stats.json')
       .then(response => response.json() )

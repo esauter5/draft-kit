@@ -1,6 +1,7 @@
 class Player < ApplicationRecord
   has_many :season_stats
   has_many :season_projections
+  has_many :rankings
 
   validates_uniqueness_of :name
 

@@ -1,6 +1,24 @@
 import React from 'react';
 import titleize from 'titleize';
 
+const defaultSortMethod= (a,b) => {
+  // force null and undefined to the bottom
+  a = (a === null || a === undefined || a === "") ? Infinity : a;
+  b = (b === null || b === undefined || b === "") ? Infinity : b;
+  // force any string values to lowercase
+  a = a === 'string' ? a.toLowerCase() : a;
+  b = b === 'string' ? b.toLowerCase() : b;
+  // Return either 1 or -1 to indicate a sort priority
+  if (a > b) {
+    return 1;
+  }
+  if (a < b) {
+    return -1;
+  }
+  // returning 0, undefined or any falsey value will use subsequent sorts or the index as a tiebreaker
+  return 0;
+}
+
 const columns = [
   {
     Header: 'Player',
@@ -105,6 +123,34 @@ const columns = [
         ),
       },
     ],
+  },
+
+  {
+    Header: 'Rankings',
+    columns: [
+      {
+        Header: 'Rank',
+        accessor: 'rankings[0].ranking',
+        sortMethod: defaultSortMethod,
+        defaultSortDesc: false,
+        minWidth: 50
+      },
+      {
+        Header: 'ADP',
+        accessor: 'rankings[0].averageDraftPosition',
+        sortMethod: defaultSortMethod,
+        defaultSortDesc: false,
+        minWidth: 50
+      },
+      {
+        Header: 'Diff',
+        id: 'diff',
+        accessor:  d => d.rankings[0] ? d.rankings[0].averageDraftPosition - d.rankings[0].ranking : 0,
+        sortMethod: defaultSortMethod,
+        defaultSortDesc: false,
+        minWidth: 50
+      },
+    ]
   },
 
   {
@@ -227,6 +273,18 @@ const columns = [
         accessor: 'seasonProjections[0].receivingTds',
       },
     ],
+  },
+
+  {
+    Header: 'Notes',
+    columns: [
+      {
+        Header: 'Outlook',
+        accessor: 'seasonProjections[0].outlook',
+        className: 'outlook',
+        minWidth: 400,
+      },
+    ]
   },
 ];
 

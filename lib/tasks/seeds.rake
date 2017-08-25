@@ -147,4 +147,27 @@ namespace :seeds do
       points_per_other_td: 6
     })
   end
+
+  desc 'rankings'
+  task rankings: :environment do
+    CSV.foreach('public/rankings.csv') do |row|
+      next if row[1] == "Player"
+      puts row[1]
+      player = Player.find_by(name: row[1].downcase)
+
+      if player
+        Ranking.create({
+          player: player,
+          season: 2017,
+          ranking: row[0],
+          position_ranking: row[3],
+          average_draft_position: row[9]
+        })
+
+        projection = SeasonProjection.find_by(player: player, season: 2017)
+        projection.update(bye_week: row[4]) if projection
+      end
+
+    end
+  end
 end

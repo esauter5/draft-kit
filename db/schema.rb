@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825013220) do
+ActiveRecord::Schema.define(version: 20170825123053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,17 @@ ActiveRecord::Schema.define(version: 20170825013220) do
     t.index ["name"], name: "index_players_on_name", unique: true
   end
 
+  create_table "rankings", force: :cascade do |t|
+    t.integer "season"
+    t.integer "ranking"
+    t.string "position_ranking"
+    t.integer "average_draft_position"
+    t.uuid "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["season", "player_id"], name: "index_rankings_on_season_and_player_id", unique: true
+  end
+
   create_table "season_projections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "player_id"
     t.integer "season"
@@ -70,6 +81,7 @@ ActiveRecord::Schema.define(version: 20170825013220) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "outlook"
+    t.integer "bye_week"
     t.index ["player_id", "season"], name: "index_season_projections_on_player_id_and_season", unique: true
     t.index ["season"], name: "index_season_projections_on_season"
   end
